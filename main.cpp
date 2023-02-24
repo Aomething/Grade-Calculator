@@ -32,7 +32,7 @@ t - Search by name for a course,
       return item not found
   if course not found:
     return item not found
-p - Print all courses for viewing
+p - Print all courses for viewing, as well as the current average for the each class
 i - Import file by name
 o - export to file by name
 q - Quit
@@ -159,6 +159,8 @@ void printMenu(vector<course> &list) {
           for (int i = 0; i < tempInt; i++) {
             list[i].printCourse(cout);
             cout << "\n";
+            list[i].calcAverage();
+            cout << "Final Weighted Grade: " << list[i].GetFinal();
           }
         break;
         case 'i':
@@ -238,8 +240,8 @@ int main() {
   //tempCourse.printCourse();
   cout << "\n\n\n";
   
-  //tempCourse.calcAverage();
-  //cout << "Final Weighted Grade: " << tempCourse.GetFinal();
+  tempCourse.calcAverage();
+  
   courseList.push_back(tempCourse);
   
   printMenu(courseList);
