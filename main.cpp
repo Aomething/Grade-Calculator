@@ -32,6 +32,7 @@ t - Search by name for a course,
       return item not found
   if course not found:
     return item not found
+p - Print all courses for viewing
 i - Import file by name
 o - export to file by name
 q - Quit
@@ -53,19 +54,19 @@ void printMenu(vector<course> list) {
   ofstream oFile;
   
   while (cmd != 'q') {
-    
-    cout << "MENU\n" 
-    << "a - Add a course to the current list\n"
-    << "d - Delete a course from the current list\n"
-    << "m - Modify course\n"
-    << "s - Add an assignment to a course\n"
-    << "t - Delete an assignment from a course\n" 
-    << "p - Print all courses for viewing\n"
-    << "i - Import course info\n"
-    << "o - Export course info\n"
-    << "q - Quit\n"
-    << "\nChoose an option:\n\n";
     while (valid) {
+      cout << "MENU\n" 
+      << "a - Add a course to the current list\n"
+      << "d - Delete a course from the current list\n"
+      << "m - Modify course\n"
+      << "s - Add an assignment to a course\n"
+      << "t - Delete an assignment from a course\n" 
+      << "p - Print all courses for viewing\n"
+      << "i - Import course info\n"
+      << "o - Export course info\n"
+      << "q - Quit\n"
+      << "\nChoose an option:\n\n";
+      
       cin >> cmd;
       switch(cmd) {
         case 'a':
@@ -92,16 +93,6 @@ void printMenu(vector<course> list) {
             }
           }
         break;
-        case 'p':
-          valid = true;
-          cout << "Printing all info\n"; 
-          courseNum = list.size();
-          for(int i = 0; i < tempInt; i++) {
-            cout << "new line\n";
-            list[i].printCourse();
-            cout << "\n";
-          }
-        break;
         case 't':
           valid = true;
           cout << "Enter the name of the course to take away from: " << endl;
@@ -111,6 +102,14 @@ void printMenu(vector<course> list) {
             if (list[i].GetName() == tempStr) {
                
             }
+          }
+        break;
+        case 'p':
+          valid = true;
+          tempInt = list.size();
+          for (int i = 0; i < tempInt; i++) {
+            list[i].printCourse();
+            cout << "\n";
           }
         break;
         case 'i':
@@ -180,6 +179,7 @@ int main() {
   
   //tempCourse.calcAverage();
   //cout << "Final Weighted Grade: " << tempCourse.GetFinal();
+  courseList.push_back(tempCourse);
   
   printMenu(courseList);
   
