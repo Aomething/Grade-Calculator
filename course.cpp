@@ -74,18 +74,18 @@ void course::printWork(weight temp) {
   return;
 }
 
-void course::printCourse() {
+void course::printCourse(ostream& out) {
   int len = weightList.size();
-  cout << "Course: " << courseName << endl;
-  cout << "Description: " << courseDescription << endl;
+  out << "Course: " << courseName << endl;
+  out << "Description: " << courseDescription << endl;
   
   
-  cout << "Info: \n" << endl;
-  cout << "Number of Weighted Categories: " << len << "\n" << endl;
+  out << "Info: \n" << endl;
+  out << "Number of Weighted Categories: " << len << "\n" << endl;
   for (int i = 0; i < len; i++) {
     printWork(weightList[i]);
     calcAssignAvg(weightList[i].GetName());
-    cout << endl;
+    out << endl;
   }
   return;
 }

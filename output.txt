@@ -1,1 +1,34 @@
-001
+1
+unnamed course
+absolutely indescribable
+3
+homework
+0.4
+quizzes
+0.2
+exams
+0.6
+homework
+hw 1
+homework #1
+85
+homework
+hw 2
+homework #2
+95
+quizzes
+qz 1
+quiz #1
+75
+quizzes
+qz 2
+quiz #2
+85
+exams
+ex 1
+exam 1
+50
+exams
+ex 2
+exam 2
+85

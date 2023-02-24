@@ -45,6 +45,7 @@ void printMenu(vector<course> list) {
   char cmd;
   bool valid = true;
   assignment tempAsn;
+  weight tempWgt;
   course tempCrs;
   string tempStr;
   double tempWght;
@@ -82,6 +83,9 @@ void printMenu(vector<course> list) {
         case 'd':
           valid = true;
         break;
+        case 'm':
+          valid = true;
+        break;
         case 's':
           valid = true;
           cout << "Enter the name of the course to add to: " << endl;
@@ -89,7 +93,8 @@ void printMenu(vector<course> list) {
           tempInt = list.size();
           for (int i = 0; i < tempInt; i++) {
             if (list[i].GetName() == tempStr) {
-               cout << "" << endl;
+               cout << "Enter a category for weighting:\n" << endl;
+              
             }
           }
         break;
@@ -108,7 +113,7 @@ void printMenu(vector<course> list) {
           valid = true;
           tempInt = list.size();
           for (int i = 0; i < tempInt; i++) {
-            list[i].printCourse();
+            list[i].printCourse(cout);
             cout << "\n";
           }
         break;
@@ -118,12 +123,24 @@ void printMenu(vector<course> list) {
         case 'o':
           valid = true;
           cout << "Outputting all info to \'output.txt\'" << endl;
-          oFile.open("output.txt", ios::app);
-          oFile << courseNum; //write to file the number of courses
+          oFile.open("output.txt");
+          oFile << courseNum << endl; //write to file the number of courses
           for (int i = 0; i < courseNum; i++) {
-            tempInt = list[i].GetWorkList().size(); //write to file the number of assignments in current course
+            oFile << list[i].GetName() << endl;
+            oFile << list[i].GetDesc() << endl;
+            tempInt = list[i].GetWeightList().size(); 
+            oFile << tempInt << endl; //write to file number of weighting categories
             for (int j = 0; j < tempInt; j++) {
-              
+              oFile << list[i].GetWeightList().at(j).GetName() << endl;
+              oFile << list[i].GetWeightList().at(j).GetWeight() << endl;
+            }
+            tempInt = list[i].GetWorkList().size(); 
+            cout << tempInt; //write to file the number of assignments in current course 
+            for (int k = 0; k < tempInt; k++) {
+              oFile << list[i].GetWorkList().at(k).GetCat() << endl;
+              oFile << list[i].GetWorkList().at(k).GetName() << endl;
+              oFile << list[i].GetWorkList().at(k).GetDesc() << endl;
+              oFile << list[i].GetWorkList().at(k).GetGrade() << endl;
             }
           }
           oFile.close();

@@ -31,7 +31,7 @@ public:
   
   void AddFinal(double sum);
   void printWork(weight temp);
-  void printCourse();
+  void printCourse(ostream& out);
 
   vector<assignment> GetWorkList();
   vector<weight> GetWeightList();
