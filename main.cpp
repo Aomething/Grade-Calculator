@@ -41,14 +41,14 @@ q - Quit
 #include "course.h"
 #include <fstream>
 
-void printMenu(vector<course> list) {
+void printMenu(vector<course> &list) {
   char cmd;
   bool valid = true;
   assignment tempAsn;
   weight tempWgt;
   course tempCrs;
   string tempStr;
-  double tempWght;
+  double tempDoub;
   int tempInt;
   int courseNum = list.size();
   ifstream iFile;
@@ -73,10 +73,11 @@ void printMenu(vector<course> list) {
         case 'a':
           valid = true;
           cout << "Enter the name for the course: \n" << endl;
-          cin >> tempStr;
+          cin.ignore(1);
+          getline(cin, tempStr);
           tempCrs.SetName(tempStr);
           cout << "Enter the description for the course: \n" << endl;
-          cin >> tempStr;
+          getline(cin, tempStr);
           tempCrs.SetDescr(tempStr);
           list.push_back(tempCrs);
         break;
@@ -88,13 +89,56 @@ void printMenu(vector<course> list) {
         break;
         case 's':
           valid = true;
+          cin.ignore(1);
           cout << "Enter the name of the course to add to: " << endl;
-          cin >> tempStr;
+          getline(cin, tempStr);
           tempInt = list.size();
           for (int i = 0; i < tempInt; i++) {
-            if (list[i].GetName() == tempStr) {
-               cout << "Enter a category for weighting:\n" << endl;
-              
+            if (list[i].GetName() == tempStr) {  //found selected course
+              cout << "Enter a category to add to weights:\n(type 'none' to add an assignment to an existing category)\n" << endl;
+              getline(cin, tempStr);
+              if (tempStr == "none") {
+                cout << "Enter a category to add an assignment to:\n";
+                getline(cin, tempStr);
+                tempInt = list[i].GetWeightList().size();
+                for (int j = 0; j < tempInt; j++) { 
+                  if (list[i].GetWeightList().at(j).GetName() == tempStr) {
+                    //found selected category
+                    tempAsn.SetCat(tempStr);
+                    cout << "Enter a name for the new assignment:\n";
+                    getline(cin, tempStr);
+                    tempAsn.SetName(tempStr);
+                    cout << "Enter the description for the new assignment:\n";
+                    getline(cin, tempStr);
+                    tempAsn.SetDesc(tempStr);
+                    cout << "Enter the grade recieved for the assignment:\n";
+                    cin >> tempDoub;
+                    cout << tempDoub << endl;
+                    tempAsn.SetGrade(tempDoub);
+                    list[i].GetWorkList().push_back(tempAsn);
+                  }
+                }
+              }
+              else {
+                //create new category, then add an assignment to it
+                tempWgt.SetName(tempStr);
+                cout << "Enter the weight of the category (decimal form)" << endl;
+                cin >> tempDoub;
+                tempWgt.SetWeight(tempDoub);
+                list[i].GetWeightList().push_back(tempWgt);
+                cin.ignore(1);
+                tempAsn.SetCat(tempStr);
+                cout << "Enter a name for the new assignment:\n";
+                getline(cin, tempStr);
+                tempAsn.SetName(tempStr);
+                cout << "Enter the description for the new assignment:\n";
+                getline(cin, tempStr);
+                tempAsn.SetDesc(tempStr);
+                cout << "Enter the grade recieved for the assignment:\n";
+                cin >> tempDoub;
+                tempAsn.SetGrade(tempDoub);
+                list[i].GetWorkList().push_back(tempAsn);
+              }
             }
           }
         break;
@@ -135,7 +179,7 @@ void printMenu(vector<course> list) {
               oFile << list[i].GetWeightList().at(j).GetWeight() << endl;
             }
             tempInt = list[i].GetWorkList().size(); 
-            cout << tempInt; //write to file the number of assignments in current course 
+            oFile << tempInt; //write to file the number of assignments in current course 
             for (int k = 0; k < tempInt; k++) {
               oFile << list[i].GetWorkList().at(k).GetCat() << endl;
               oFile << list[i].GetWorkList().at(k).GetName() << endl;
