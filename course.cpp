@@ -114,12 +114,18 @@ double course::calcAssignAvg(string cat) {
   return total / count;
 }
 
+void course::SetFinal(double grade) {
+  finalGrade = grade;
+  return;
+}
+
 double course::calcAverage() {
+  
   int courseNum = courseWork.size();
   int weightNum = weightList.size();
   double tempValue;
   double average;
-  //printCourse();
+  SetFinal(0);
   for (int i = 0; i < weightNum; i++) {
     AddFinal(calcAssignAvg(weightList[i].GetName()) * weightList[i].GetWeight());
   }

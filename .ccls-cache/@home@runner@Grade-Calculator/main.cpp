@@ -1,23 +1,8 @@
 /*
-  The goal here is to take in .txt equivalents of a course syllabus pdf,
-  take in the name of the course, grading/weighting amounts (%), and then
-  take in another .txt file full of grades on assignments to calculate a
-  grade average. Also, output all info to a new file, named with the
-  pattern:
 
-      Semester_Year_weighted_grades.txt
+The goal here is to take in data from the user or from an input .txt file, and keep track of a series of courses, all the assignments for each one, and the weight that each assignment has. The user will be able to add and remove courses, add and remove assignments from individual courses, and output all info to either the screen or an output file. The format of the output file should be structured so the same program can read and import the data back into memory at a later date. 
 
-  where the semester is either Spring (Sp) or Fall (Fa)
-  and Year is the last 2 digits of the current year, 2023 = '23'
-
-  Inputs:
-  syllabus.txt
-  grades.txt
-
-  Outputs:
-  calculations -> cout
-  calculations -> XX_YY_weighted_grades.txt
-
+Further functionality might include having it sift through a .txt equivalent of a syllabus and automatically finding the weights for the course and automatically create a course and assign those weights to it. 
 
 MAIN COURSE MENU
 a - Add course to current course list
@@ -126,7 +111,7 @@ void printMenu(vector<course> &list) {
                 cin >> tempDoub;
                 tempWgt.SetWeight(tempDoub);
                 list[i].GetWeightList().push_back(tempWgt);
-                cin.ignore(1);
+                //cin.ignore(1);
                 tempAsn.SetCat(tempStr);
                 cout << "Enter a name for the new assignment:\n";
                 getline(cin, tempStr);
@@ -160,7 +145,7 @@ void printMenu(vector<course> &list) {
             list[i].printCourse(cout);
             cout << "\n";
             list[i].calcAverage();
-            cout << "Final Weighted Grade: " << list[i].GetFinal();
+            cout << "Final Weighted Grade: " << list[i].GetFinal() << "\n\n";
           }
         break;
         case 'i':
@@ -181,7 +166,7 @@ void printMenu(vector<course> &list) {
               oFile << list[i].GetWeightList().at(j).GetWeight() << endl;
             }
             tempInt = list[i].GetWorkList().size(); 
-            oFile << tempInt; //write to file the number of assignments in current course 
+            oFile << tempInt << endl; //write to file the number of assignments in current course 
             for (int k = 0; k < tempInt; k++) {
               oFile << list[i].GetWorkList().at(k).GetCat() << endl;
               oFile << list[i].GetWorkList().at(k).GetName() << endl;
@@ -236,12 +221,11 @@ int main() {
   tempCourse.addWeight(w1);
   tempCourse.addWeight(w2);
   tempCourse.addWeight(w3);
-
-  //tempCourse.printCourse();
+  
   cout << "\n\n\n";
   
   tempCourse.calcAverage();
-  
+  //cout << "Final Weighted Grade: " << tempCourse.GetFinal() << endl;
   courseList.push_back(tempCourse);
   
   printMenu(courseList);

@@ -15,7 +15,7 @@ public:
   // setter
   void SetName(string name);
   void SetDescr(string desc);
-
+  void SetFinal(double grade);
   // getter
   string GetName();
   string GetDesc();
