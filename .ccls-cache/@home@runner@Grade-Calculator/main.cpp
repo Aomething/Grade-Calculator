@@ -1,0 +1,170 @@
+/*
+  The goal here is to take in .txt equivalents of a course syllabus pdf,
+  take in the name of the course, grading/weighting amounts (%), and then
+  take in another .txt file full of grades on assignments to calculate a
+  grade average. Also, output all info to a new file, named with the
+  pattern:
+
+      Semester_Year_weighted_grades.txt
+
+  where the semester is either Spring (Sp) or Fall (Fa)
+  and Year is the last 2 digits of the current year, 2023 = '23'
+
+  Inputs:
+  syllabus.txt
+  grades.txt
+
+  Outputs:
+  calculations -> cout
+  calculations -> XX_YY_weighted_grades.txt
+
+
+MAIN COURSE MENU
+a - Add course to current course list
+d - Search by name for a course, delete if found, return error if not found
+m - Search by name for a course, prompt to modify if found, return error if not found
+s - Search by name for a course, prompt for an assignment to add if found, return error if not found
+t - Search by name for a course, 
+  if course found: prompt for assignment name to search for
+    if assignment found:
+      delete assignment matching name
+    if assignment not found:
+      return item not found
+  if course not found:
+    return item not found
+i - Import file by name
+o - export to file by name
+q - Quit
+
+*/
+#include "course.h"
+#include <fstream>
+
+void printMenu(vector<course> list) {
+  char cmd;
+  bool valid = true;
+  assignment tempAsn;
+  course tempCrs;
+  string tempStr;
+  double tempWght;
+  int tempInt;
+  int courseNum = list.size();
+  ifstream iFile;
+  ofstream oFile;
+  
+  cout << "MENU\n" 
+    << "a - Add a course to the current list\n"
+    << "d - Delete a course from the current list\n"
+    << "m - Modify course\n"
+    << "s - Add an assignment to a course\n"
+    << "t - Delete an assignment from a course\n"
+    << "i - Import course info\n"
+    << "o - Export course info\n"
+    << "q - Quit\n"
+    << "\nChoose an option:\n\n";
+  while (valid) {
+    while (cmd != 'q') {
+      cin >> cmd;
+      switch(cmd) {
+        case 'a':
+          cout << "Enter the name for the course: \n" << endl;
+          cin >> tempStr;
+          tempCrs.SetName(tempStr);
+          cout << "Enter the description for the course: \n" << endl;
+          cin >> tempStr;
+          tempCrs.SetDescr(tempStr);
+          list.push_back(tempCrs);
+        break;
+        case 'd':
+          
+        break;
+        case 's':
+          cout << "Enter the name of the course to add to: " << endl;
+          cin >> tempStr;
+          tempInt = list.size();
+          for (int i = 0; i < tempInt; i++) {
+            if (list[i].GetName() == tempStr) {
+               cout << "" << endl;
+            }
+          }
+        break;
+        case 't':
+          cout << "Enter the name of the course to take away from: " << endl;
+          cin >> tempStr;
+          tempInt = list.size();
+          for (int i = 0; i < tempInt; i++) {
+            if (list[i].GetName() == tempStr) {
+               
+            }
+          }
+        break;
+        case 'i':
+          
+        break;
+        case 'o':
+          cout << "Outputting all info to \'output.txt\'" << endl;
+          oFile.open("output.txt", ios::app);
+          oFile << courseNum; //number of courses
+          for (int i = 0; i < courseNum; i++) {
+            tempInt = list[i].GetWorkList().size(); //number of assignments in current course
+            for (int j = 0; j < tempInt; j++) {
+              
+            }
+          }
+          oFile.close();
+        break;
+        case 'q':
+          return;
+        break;
+        default:
+          cout << "Invalid input\n";
+        break;
+      }
+    }
+  }
+
+  
+  return;
+}
+
+int main() {
+  string tempName;
+  string tempDesc;
+  double tempGrade;
+  assignment tempAssign;
+  course tempCourse;  
+  vector<course> courseList;
+  
+  assignment a1("hw 1", "homework #1", "homework", 85);
+  assignment a2("hw 2", "homework #2", "homework", 95);
+  assignment a3("qz 1","quiz #1","quizzes", 75);
+  assignment a4("qz 2", "quiz #2", "quizzes", 85);
+  assignment a5("ex 1", "exam 1", "exams", 50);
+  assignment a6("ex 2","exam 2","exams", 85);
+  
+  weight w1("homework",0.4);
+  weight w2("quizzes",0.2);
+  weight w3("exams", 0.6);
+
+  tempCourse.addWork(a1);
+  tempCourse.addWork(a2);
+  tempCourse.addWork(a3);
+  tempCourse.addWork(a4);
+  tempCourse.addWork(a5);
+  tempCourse.addWork(a6);
+
+  tempCourse.addWeight(w1);
+  tempCourse.addWeight(w2);
+  tempCourse.addWeight(w3);
+
+  //tempCourse.printCourse();
+  cout << "\n\n\n";
+  
+  tempCourse.calcAverage();
+  //cout << "Final Weighted Grade: " << tempCourse.GetFinal();
+  
+  printMenu(courseList);
+  
+  return 0;
+}
+
