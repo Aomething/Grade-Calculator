@@ -52,21 +52,24 @@ void printMenu(vector<course> list) {
   ifstream iFile;
   ofstream oFile;
   
-  cout << "MENU\n" 
+  while (cmd != 'q') {
+    
+    cout << "MENU\n" 
     << "a - Add a course to the current list\n"
     << "d - Delete a course from the current list\n"
     << "m - Modify course\n"
     << "s - Add an assignment to a course\n"
-    << "t - Delete an assignment from a course\n"
+    << "t - Delete an assignment from a course\n" 
+    << "p - Print all courses for viewing\n"
     << "i - Import course info\n"
     << "o - Export course info\n"
     << "q - Quit\n"
     << "\nChoose an option:\n\n";
-  while (valid) {
-    while (cmd != 'q') {
+    while (valid) {
       cin >> cmd;
       switch(cmd) {
         case 'a':
+          valid = true;
           cout << "Enter the name for the course: \n" << endl;
           cin >> tempStr;
           tempCrs.SetName(tempStr);
@@ -76,9 +79,10 @@ void printMenu(vector<course> list) {
           list.push_back(tempCrs);
         break;
         case 'd':
-          
+          valid = true;
         break;
         case 's':
+          valid = true;
           cout << "Enter the name of the course to add to: " << endl;
           cin >> tempStr;
           tempInt = list.size();
@@ -88,7 +92,18 @@ void printMenu(vector<course> list) {
             }
           }
         break;
+        case 'p':
+          valid = true;
+          cout << "Printing all info\n"; 
+          courseNum = list.size();
+          for(int i = 0; i < tempInt; i++) {
+            cout << "new line\n";
+            list[i].printCourse();
+            cout << "\n";
+          }
+        break;
         case 't':
+          valid = true;
           cout << "Enter the name of the course to take away from: " << endl;
           cin >> tempStr;
           tempInt = list.size();
@@ -99,14 +114,15 @@ void printMenu(vector<course> list) {
           }
         break;
         case 'i':
-          
+          valid = true;
         break;
         case 'o':
+          valid = true;
           cout << "Outputting all info to \'output.txt\'" << endl;
           oFile.open("output.txt", ios::app);
-          oFile << courseNum; //number of courses
+          oFile << courseNum; //write to file the number of courses
           for (int i = 0; i < courseNum; i++) {
-            tempInt = list[i].GetWorkList().size(); //number of assignments in current course
+            tempInt = list[i].GetWorkList().size(); //write to file the number of assignments in current course
             for (int j = 0; j < tempInt; j++) {
               
             }
@@ -114,6 +130,8 @@ void printMenu(vector<course> list) {
           oFile.close();
         break;
         case 'q':
+          valid = true;
+          cout << "Stopping program\n";
           return;
         break;
         default:
@@ -160,7 +178,7 @@ int main() {
   //tempCourse.printCourse();
   cout << "\n\n\n";
   
-  tempCourse.calcAverage();
+  //tempCourse.calcAverage();
   //cout << "Final Weighted Grade: " << tempCourse.GetFinal();
   
   printMenu(courseList);

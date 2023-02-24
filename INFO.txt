@@ -1,0 +1,3 @@
+GOALS:
+This program is designed for learning. The end result of the program will take file input, specifically a .txt version of a course syllabus, search for the grading weights, and add them to a course automatically. From there, the user will input assignments for each course. When the program is done reading and editing, it will write to an output file, which can then be reopened and read to form a save and load system. 
+
